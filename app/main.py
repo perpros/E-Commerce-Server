@@ -3,6 +3,8 @@ from starlette.exceptions import HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
+from app.db.filedb import products_list
+
 from .api.api_v1.api import router as api_router
 from .core.config import ALLOWED_HOSTS, API_V1_STR, PROJECT_NAME
 from .core.errors import http_422_error_handler, http_error_handler
@@ -21,8 +23,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.add_event_handler("startup", connect_to_mongo)
-# app.add_event_handler("shutdown", close_mongo_connection)
+def _startup_db_client():
+    app.products_list =  products_list
+
+# def _shutdown_db_client():
+#     app.mongodb_client.close()
+
+app.add_event_handler("startup", _startup_db_client)
+# app.add_event_handler("shutdown", _shutdown_db_client)
+
+
 
 app.add_exception_handler(HTTPException, http_error_handler)
 app.add_exception_handler(HTTP_422_UNPROCESSABLE_ENTITY, http_422_error_handler)
