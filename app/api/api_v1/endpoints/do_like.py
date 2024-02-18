@@ -4,18 +4,11 @@ from typing import List
 
 router = APIRouter()
 
-# @router.get('/products')
-# def hello():
-#     return 'hello products'
-
-
-@router.get("/products", response_description="List all products")
+@router.get("/doLike", response_description="Do like")
 def list_courses(request: Request):
-    courses = list(request.app.products_list())
-
     return {
         "success": True,
-        "message": "List all products successfully",
+        "message": "Like successfully",
         # "error": {"code": "UNKNOWN_ERROR", "message": "unknown error"},
-        "data": {"count": len(courses), "products": courses},
+        "data": {},
     }
