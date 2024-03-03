@@ -3,7 +3,7 @@ from starlette.exceptions import HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
-from app.db.filedb import products_list
+from app.db.filedb import products_list, db_remove_product
 
 from .api.api_v1.api import router as api_router
 from .core.config import ALLOWED_HOSTS, API_V1_STR, PROJECT_NAME
@@ -24,6 +24,7 @@ app.add_middleware(
 )
 
 def _startup_db_client():
+    app.db_remove_product =  db_remove_product
     app.products_list =  products_list
 
 # def _shutdown_db_client():
