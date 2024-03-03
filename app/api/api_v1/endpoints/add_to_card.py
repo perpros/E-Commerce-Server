@@ -5,11 +5,21 @@ from typing import List
 router = APIRouter()
 
 
-@router.get("/addToCard", response_description="Add to card")
-def list_courses(request: Request):
-    return {
-        "success": True,
-        "message": "Add to card successfully",
-        # "error": {"code": "UNKNOWN_ERROR", "message": "unknown error"},
-        "data": {},
-    }
+@router.post("/addToCard", response_description="Add to card")
+def list_courses(id: str, request: Request):
+    
+    # Validate ID
+    if not isinstance(id, str):
+        raise HTTPException(status_code=400, detail="Invalid ID format")
+
+    # Logic to remove item from card using the ID
+    try:
+        # Replace with your actual removal logic
+        added = request.app.add_to_card(id)  # Example database interaction
+        if not added:
+            raise HTTPException(status_code=404, detail="Item not found")
+
+        return {"success": True, "message": "Item added successfully"}
+    except Exception as e:
+        # Handle other exceptions gracefully
+        raise HTTPException(status_code=500, detail="Internal server errorrr")

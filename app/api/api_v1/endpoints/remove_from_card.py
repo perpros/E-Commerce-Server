@@ -15,7 +15,7 @@ def list_courses(id: str, request: Request):
     # Logic to remove item from card using the ID
     try:
         # Replace with your actual removal logic
-        removed = request.app.db_remove_product(id)  # Example database interaction
+        removed = request.app.remove_from_cards(id)  # Example database interaction
         if not removed:
             raise HTTPException(status_code=404, detail="Item not found")
 
