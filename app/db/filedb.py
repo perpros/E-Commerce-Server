@@ -6,7 +6,7 @@ from fastapi import HTTPException
 from app.models.product import Product
 
 def products_list() -> typing.List[typing.Any]:
-    file_path = "../../products.data"
+    file_path = "./products.data"
     try:
         with open(file_path, 'r') as json_file:
             data = json.load(json_file)
@@ -23,7 +23,7 @@ def products_list() -> typing.List[typing.Any]:
     
 
 def card_products_list() -> typing.List[typing.Any]:
-    file_path = "../../card.data"
+    file_path = "./card.data"
     try:
         with open(file_path, 'r') as json_file:
             data = json.load(json_file)
@@ -40,7 +40,7 @@ def card_products_list() -> typing.List[typing.Any]:
 
 
 def remove_from_card(id: str) -> bool:
-    file_path = "../../card.data"
+    file_path = "./card.data"
     
     products = card_products_list()  # Load existing products
     # Find the product to remove
@@ -70,7 +70,7 @@ def remove_from_card(id: str) -> bool:
 
 
 def add_to_card(id: str) -> bool:
-    file_path = "../../card.data"
+    file_path = "./card.data"
     
     products = products_list()  # Load existing products
     card_products = card_products_list()  # Load existing products
@@ -97,4 +97,29 @@ def add_to_card(id: str) -> bool:
     except Exception as e:
         print(f"Error writing to file: {e}")
 
-    return True  # Product removed successfully
+    return True  # Product added to the card successfully
+
+
+def checkout() -> bool:
+    file_path = "./card.data"
+    
+    products = card_products_list()  # Load existing products
+    
+    products.clear()
+        
+    # Save the updated product list to the file
+    try:
+        with open(file_path, "w") as json_file:
+            product_dict = [
+                {
+                    **product.dict(),
+                    "created_at": product.created_at.isoformat(),
+                    "updated_at": product.updated_at.isoformat(),
+                }
+                for product in products
+            ]
+            json.dump(product_dict, json_file, indent=4)
+    except Exception as e:
+        print(f"Error writing to file: {e}")
+
+    return True  # Checkout successfully

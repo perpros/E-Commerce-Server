@@ -3,7 +3,7 @@ from starlette.exceptions import HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
-from app.db.filedb import products_list, remove_from_card, add_to_card, card_products_list
+from app.db.filedb import products_list, remove_from_card, add_to_card, card_products_list, checkout
 
 from .api.api_v1.api import router as api_router
 from .core.config import ALLOWED_HOSTS, API_V1_STR, PROJECT_NAME
@@ -28,6 +28,8 @@ def _startup_db_client():
     app.products_list =  products_list
     app.card_products_list =  card_products_list
     app.add_to_card =  add_to_card
+    app.checkout =  checkout
+
 
 # def _shutdown_db_client():
 #     app.mongodb_client.close()

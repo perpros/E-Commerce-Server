@@ -5,7 +5,7 @@ from typing import List
 router = APIRouter()
 
 @router.get("/doLike", response_description="Do like")
-def list_courses(request: Request):
+def do_like(request: Request):
     return {
         "success": True,
         "message": "Like successfully",

@@ -6,7 +6,7 @@ router = APIRouter()
 
 
 @router.get("/cardProductsList", response_description="List all card's products")
-def list_courses(request: Request):
+def card_products_list(request: Request):
     courses = list(request.app.card_products_list())
 
     return {

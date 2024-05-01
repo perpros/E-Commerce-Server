@@ -6,7 +6,7 @@ router = APIRouter()
 
 
 @router.post("/addToCard", response_description="Add to card")
-def list_courses(id: str, request: Request):
+def add_to_card(id: str, request: Request):
     
     # Validate ID
     if not isinstance(id, str):

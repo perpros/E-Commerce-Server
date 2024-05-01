@@ -5,8 +5,8 @@ from typing import List
 router = APIRouter()
 
 
-@router.post("/removeFromCard/{id}", response_description="Remove from card")
-def list_courses(id: str, request: Request):
+@router.post("/removeFromCard", response_description="Remove from card")
+def remove_from_card(id: str, request: Request):
     
     # Validate ID
     if not isinstance(id, str):
@@ -15,7 +15,7 @@ def list_courses(id: str, request: Request):
     # Logic to remove item from card using the ID
     try:
         # Replace with your actual removal logic
-        removed = request.app.remove_from_cards(id)  # Example database interaction
+        removed = request.app.remove_from_card(id)  # Example database interaction
         if not removed:
             raise HTTPException(status_code=404, detail="Item not found")
 
